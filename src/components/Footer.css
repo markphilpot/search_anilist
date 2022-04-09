@@ -8,6 +8,10 @@
   align-items: center;
 }
 
-.Footer > div {
+.Footer .poweredBy {
   margin-right: 8px;
+}
+
+.Footer .shortcutLink {
+  margin-left: 8px;
 }

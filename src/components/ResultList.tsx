@@ -18,7 +18,7 @@ const ResultList = (props: Props) => {
 
   return (
     <div className={'ResultList'}>
-      <h1 onClick={handleOnClick}>{title}</h1>
+      <h2 onClick={handleOnClick}>{title}</h2>
       {show && <div className={'cardList'}>{children}</div>}
     </div>
   );

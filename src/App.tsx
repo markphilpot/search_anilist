@@ -3,7 +3,6 @@ import React, { KeyboardEventHandler, useCallback, useMemo, useRef, useState } f
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-import { useLocalStorage } from 'react-use';
 import { all } from 'ramda';
 import { useQuery } from '@apollo/client';
 import { useSearchParam } from 'react-use';
@@ -11,8 +10,6 @@ import { searchAnilist } from './graphql/search';
 import { searchAnilist as searchAnilistData, searchAnilistVariables } from './graphql/types/searchAnilist';
 import AnimeCard from './components/cards/AnimeCard';
 
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './components/Footer';
 import MangaCard from './components/cards/MangaCard';
 
@@ -25,15 +22,10 @@ import StaffCard from './components/cards/StaffCard';
 import StudioCard from './components/cards/StudioCard';
 
 import titleSuggestions from './assets/titles.json';
+import useManageTheme from './hooks/useManageTheme';
 
 function App() {
-  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
-
-  const toggleTheme = useCallback(() => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-  }, [setTheme, theme]);
+  const { theme } = useManageTheme();
 
   const q = useSearchParam('q');
   const [query, setQuery] = useState(q || '');
@@ -143,13 +135,7 @@ function App() {
 
       {/*<TitleSuggestionsUtil/>*/}
 
-      <Footer>
-        <FontAwesomeIcon
-          className={'toggleThemeButton'}
-          icon={theme === 'light' ? faSun : faMoon}
-          onClick={toggleTheme}
-        />
-      </Footer>
+      <Footer />
       <ToastContainer transition={Slide} />
     </div>
   );
