@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
 
 export const searchAnilist = gql`
-  query searchAnilist($search: String, $perPage: Int = 3) {
+  query searchAnilist($search: String, $perPage: Int = 3, $isAdult: Boolean = false) {
     anime: Page(perPage: $perPage) {
       pageInfo {
         total
       }
-      results: media(type: ANIME, search: $search) {
+      results: media(type: ANIME, search: $search, isAdult: $isAdult) {
         id
         title {
           userPreferred
@@ -27,7 +27,7 @@ export const searchAnilist = gql`
       pageInfo {
         total
       }
-      results: media(type: MANGA, search: $search) {
+      results: media(type: MANGA, search: $search, isAdult: $isAdult) {
         id
         title {
           userPreferred

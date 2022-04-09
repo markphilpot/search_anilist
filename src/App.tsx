@@ -4,16 +4,20 @@ import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 import { useLocalStorage } from 'react-use';
-
+import { empty, all, not } from 'ramda';
 import { useQuery } from '@apollo/client';
 import { useSearchParam } from 'react-use';
 import { searchAnilist } from './graphql/search';
 import { searchAnilist as searchAnilistData, searchAnilistVariables } from './graphql/types/searchAnilist';
-import AnimeCard from './components/AnimeCard';
+import AnimeCard from './components/cards/AnimeCard';
 
-import './App.css';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Footer from './components/Footer';
+import MangaCard from './components/cards/MangaCard';
+
+import '@fontsource/zen-old-mincho/400.css';
+import './App.css';
 
 function App() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -32,7 +36,7 @@ function App() {
   const { data } = useQuery<searchAnilistData, searchAnilistVariables>(searchAnilist, {
     variables: {
       search: query,
-      perPage: 8,
+      perPage: 7,
     },
     skip: !query,
   });
@@ -44,25 +48,50 @@ function App() {
     }
   }, []);
 
+  const handleOnSubmit = useCallback(() => {
+    const value = inputRef.current?.value ?? '';
+    setQuery(value);
+  }, []);
+
+  const animeResults = data?.anime?.results ?? [];
+  const mangaResults = data?.manga?.results ?? [];
+
+  const noResults = all((x) => x.length === 0, [animeResults, mangaResults]);
+
   return (
     <div className="App" data-theme={theme}>
+      <div className={`spacer${!noResults ? ' spacer-collapse' : ''}`} />
+      <div className={'logo'}>何 何</div>
       <div>
-        <input type={'text'} defaultValue={query} ref={inputRef} onKeyDown={handleKeyDown} />
+        <input
+          type={'text'}
+          defaultValue={query}
+          ref={inputRef}
+          onKeyDown={handleKeyDown}
+          placeholder={'Search Anime, Manga, Characters, Staff, & Studios'}
+        />
+        <button onClick={handleOnSubmit}>Search</button>
         <FontAwesomeIcon icon={theme === 'light' ? faSun : faMoon} onClick={toggleTheme} />
       </div>
-      <div>
-        <h1>Anime</h1>
-        <div className={'results-list'}>
-          {data?.anime?.results?.map((result) => (
-            <AnimeCard
-              key={result?.id}
-              imgSrc={result?.coverImage?.large}
-              title={result?.title?.userPreferred}
-              url={result?.siteUrl}
-            />
-          ))}
-        </div>
+      <div className={`contents${!noResults ? ' contents-shown' : ''}`}>
+        {animeResults.length > 0 && (
+          <div>
+            <h1>Anime</h1>
+            <div className={'results-list'}>
+              {animeResults.map((result) => result && <AnimeCard key={result.id} anime={result} />)}
+            </div>
+          </div>
+        )}
+        {mangaResults.length > 0 && (
+          <div>
+            <h1>Manga</h1>
+            <div className={'results-list'}>
+              {mangaResults.map((result) => result && <MangaCard key={result.id} manga={result} />)}
+            </div>
+          </div>
+        )}
       </div>
+      <Footer />
       <ToastContainer transition={Slide} />
     </div>
   );

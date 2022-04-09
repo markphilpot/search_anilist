@@ -1,0 +1,17 @@
+.MangaCard {
+  cursor: pointer;
+  width: 200px;
+}
+
+.MangaCard > img {
+  height: 300px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.MangaCard > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
