@@ -23,7 +23,7 @@ const AnimeCard = (props: Props) => {
   return (
     <div className={'Card AnimeCard'} onClick={handleOnClick}>
       {imgSrc && <img className={'cardImage'} src={imgSrc} alt={title ?? ''} />}
-      <div>
+      <div className={'cardDetails'}>
         {title && (
           <div className={'cardTitle'}>
             {title} (<span>{startDate?.year}</span>)

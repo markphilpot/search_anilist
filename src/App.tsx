@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, useCallback, useRef, useState } from 'react';
+import React, { KeyboardEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -20,6 +20,11 @@ import '@fontsource/zen-old-mincho/400.css';
 import './App.css';
 import classNames from 'classnames';
 import ResultList from './components/ResultList';
+import CharacterCard from './components/cards/CharacterCard';
+import StaffCard from './components/cards/StaffCard';
+import StudioCard from './components/cards/StudioCard';
+
+import titleSuggestions from './assets/titles.json';
 
 function App() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -34,6 +39,10 @@ function App() {
   const [query, setQuery] = useState(q || '');
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const titleSuggestion = useMemo(() => {
+    return titleSuggestions[Math.floor(titleSuggestions.length * Math.random())];
+  }, []);
 
   const { data } = useQuery<searchAnilistData, searchAnilistVariables>(searchAnilist, {
     variables: {
@@ -64,8 +73,14 @@ function App() {
 
   const animeResults = data?.anime?.results ?? [];
   const mangaResults = data?.manga?.results ?? [];
+  const characterResults = data?.characters?.results ?? [];
+  const staffResults = data?.staff?.results ?? [];
+  const studioResults = data?.studios?.results ?? [];
 
-  const noResults = all((x) => x.length === 0, [animeResults, mangaResults]);
+  const noResults = all(
+    (x) => x.length === 0,
+    [animeResults, mangaResults, characterResults, staffResults, studioResults]
+  );
 
   return (
     <div className="App" data-theme={theme}>
@@ -86,7 +101,7 @@ function App() {
           ref={inputRef}
           onKeyDown={handleKeyDown}
           onChange={handleOnChange}
-          placeholder={'Sound Euphonium'}
+          placeholder={titleSuggestion}
         />
         <button className={'searchButton'} onClick={handleOnSubmit}>
           Search
@@ -109,7 +124,24 @@ function App() {
             {mangaResults.map((result) => result && <MangaCard key={result.id} manga={result} />)}
           </ResultList>
         )}
+        {characterResults.length > 0 && (
+          <ResultList title={'Characters'}>
+            {characterResults.map((result) => result && <CharacterCard key={result.id} character={result} />)}
+          </ResultList>
+        )}
+        {staffResults.length > 0 && (
+          <ResultList title={'Staff'}>
+            {staffResults.map((result) => result && <StaffCard key={result.id} staff={result} />)}
+          </ResultList>
+        )}
+        {studioResults.length > 0 && (
+          <ResultList title={'Studios'}>
+            {studioResults.map((result) => result && <StudioCard key={result.id} studio={result} />)}
+          </ResultList>
+        )}
       </div>
+
+      {/*<TitleSuggestionsUtil/>*/}
 
       <Footer>
         <FontAwesomeIcon

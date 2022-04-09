@@ -2,26 +2,25 @@ import React, { useCallback } from 'react';
 import CopyUrl from '../CopyUrl';
 
 import './shared.css';
-import './MangaCard.css';
-import { searchAnilist_manga_results } from '../../graphql/types/searchAnilist';
+import { searchAnilist_characters_results } from '../../graphql/types/searchAnilist';
 
 type Props = {
-  manga: searchAnilist_manga_results;
+  character: searchAnilist_characters_results;
 };
 
-const MangaCard = (props: Props) => {
-  const { manga } = props;
-  const { coverImage, title: titleBlock, siteUrl } = manga;
+const CharacterCard = (props: Props) => {
+  const { character } = props;
+  const { image, name, siteUrl } = character;
 
-  const imgSrc = coverImage?.large;
-  const title = titleBlock?.userPreferred;
+  const imgSrc = image?.large;
+  const title = name?.userPreferred;
 
   const handleOnClick = useCallback(() => {
     if (siteUrl) window.open(siteUrl, '_blank');
   }, [siteUrl]);
 
   return (
-    <div className={'Card MangaCard'} onClick={handleOnClick}>
+    <div className={'Card CharacterCard'} onClick={handleOnClick}>
       {imgSrc && <img className={'cardImage'} src={imgSrc} alt={title ?? ''} />}
       <div className={'cardDetails'}>
         {title && <div className={'cardTitle'}>{title}</div>}
@@ -31,4 +30,4 @@ const MangaCard = (props: Props) => {
   );
 };
 
-export default MangaCard;
+export default CharacterCard;

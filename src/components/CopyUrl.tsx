@@ -22,12 +22,18 @@ const CopyUrl = (props: Props) => {
     });
   }, []);
 
+  const squashClick = useCallback((event) => {
+    event.stopPropagation();
+  }, []);
+
   return (
-    <CopyToClipboard text={url} onCopy={handleOnCopy}>
-      <span>
-        <FontAwesomeIcon icon={faClipboard} />
-      </span>
-    </CopyToClipboard>
+    <div onClick={squashClick}>
+      <CopyToClipboard text={url} onCopy={handleOnCopy}>
+        <span>
+          <FontAwesomeIcon icon={faClipboard} />
+        </span>
+      </CopyToClipboard>
+    </div>
   );
 };
 

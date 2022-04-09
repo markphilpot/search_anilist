@@ -74,7 +74,6 @@ export interface searchAnilist_manga_results {
   coverImage: searchAnilist_manga_results_coverImage | null;
   type: MediaType | null;
   format: MediaFormat | null;
-  bannerImage: string | null;
   isLicensed: boolean | null;
   startDate: searchAnilist_manga_results_startDate | null;
   siteUrl: string | null;
@@ -174,4 +173,5 @@ export interface searchAnilist {
 export interface searchAnilistVariables {
   search?: string | null;
   perPage?: number | null;
+  isAdult?: boolean | null;
 }
