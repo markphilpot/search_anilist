@@ -1,11 +1,10 @@
-import React, { ChangeEvent, KeyboardEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 import { all } from 'ramda';
 import { useQuery } from '@apollo/client';
-import { useSearchParam } from 'react-use';
 import { searchAnilist } from './graphql/search';
 import { searchAnilist as searchAnilistData, searchAnilistVariables } from './graphql/types/searchAnilist';
 import AnimeCard from './components/cards/AnimeCard';
@@ -28,18 +27,23 @@ import StudioCard from './components/cards/StudioCard';
 
 import titleSuggestions from './assets/titles.json';
 import useManageTheme from './hooks/useManageTheme';
+import { useSearchParams } from 'react-router-dom';
 
 function App() {
   const { theme } = useManageTheme();
 
-  const q = useSearchParam('q');
-  const [query, setQuery] = useState(q || '');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get('q') || '');
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const titleSuggestion = useMemo(() => {
     return titleSuggestions[Math.floor(titleSuggestions.length * Math.random())];
   }, []);
+
+  useEffect(() => {
+    setQuery(searchParams.get('q') || '');
+  }, [searchParams]);
 
   const { data } = useQuery<searchAnilistData, searchAnilistVariables>(searchAnilist, {
     variables: {
@@ -49,24 +53,44 @@ function App() {
     skip: !query,
   });
 
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback((event) => {
-    if (event.key === 'Enter') {
-      const value = inputRef.current?.value ?? '';
-      setQuery(value);
-    }
-  }, []);
+  const handleHistoryChange = useCallback(
+    (value: string) => {
+      if (value) {
+        setSearchParams({ q: value });
+      } else {
+        setSearchParams({});
+      }
+    },
+    [setSearchParams]
+  );
+
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = useCallback(
+    (event) => {
+      if (event.key === 'Enter') {
+        const value = inputRef.current?.value ?? '';
+        setQuery(value);
+        handleHistoryChange(value);
+      }
+    },
+    [handleHistoryChange]
+  );
 
   const handleOnSubmit = useCallback(() => {
     const value = inputRef.current?.value ?? '';
     setQuery(value);
-  }, []);
+    handleHistoryChange(value);
+  }, [handleHistoryChange]);
 
-  const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value.length === 0) {
-      setQuery('');
-    }
-  }, []);
+  const handleOnChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      if (value.length === 0) {
+        setQuery('');
+        handleHistoryChange('');
+      }
+    },
+    [handleHistoryChange]
+  );
 
   const animeResults = data?.anime?.results ?? [];
   const mangaResults = data?.manga?.results ?? [];
