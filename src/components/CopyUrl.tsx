@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { MouseEventHandler, useCallback } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,7 +22,7 @@ const CopyUrl = (props: Props) => {
     });
   }, []);
 
-  const squashClick = useCallback((event) => {
+  const squashClick: MouseEventHandler = useCallback((event) => {
     event.stopPropagation();
   }, []);
 

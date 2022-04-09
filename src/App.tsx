@@ -1,4 +1,4 @@
-import React, { KeyboardEventHandler, useCallback, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, KeyboardEventHandler, useCallback, useMemo, useRef, useState } from 'react';
 
 import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -13,7 +13,12 @@ import AnimeCard from './components/cards/AnimeCard';
 import Footer from './components/Footer';
 import MangaCard from './components/cards/MangaCard';
 
+// Fonts
 import '@fontsource/zen-old-mincho/400.css';
+import '@fontsource/lato';
+import '@fontsource/lato/700.css';
+import '@fontsource/source-sans-pro';
+
 import './App.css';
 import classNames from 'classnames';
 import ResultList from './components/ResultList';
@@ -56,7 +61,7 @@ function App() {
     setQuery(value);
   }, []);
 
-  const handleOnChange = useCallback((event) => {
+  const handleOnChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.length === 0) {
       setQuery('');
@@ -83,11 +88,21 @@ function App() {
         })}
       />
 
-      <div className={'logo'}>何 何</div>
+      <div
+        className={classNames({
+          'logo': true,
+          'logoSmall': !noResults,
+        })}
+      >
+        何 何
+      </div>
 
       <div className={'SearchWrapper'}>
         <input
-          className={'searchInput'}
+          className={classNames({
+            'searchInput': true,
+            'searchInputSmall': !noResults,
+          })}
           type={'search'}
           defaultValue={query}
           ref={inputRef}
@@ -95,7 +110,13 @@ function App() {
           onChange={handleOnChange}
           placeholder={titleSuggestion}
         />
-        <button className={'searchButton'} onClick={handleOnSubmit}>
+        <button
+          className={classNames({
+            'searchButton': true,
+            'searchButtonSmall': !noResults,
+          })}
+          onClick={handleOnSubmit}
+        >
           Search
         </button>
       </div>

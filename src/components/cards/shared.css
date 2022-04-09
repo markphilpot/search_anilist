@@ -1,8 +1,14 @@
 .Card {
   cursor: pointer;
   width: 200px;
-  margin-right: 8px;
-  margin-bottom: 8px;
+  margin-right: 12px;
+  margin-bottom: 12px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.Card:hover {
+  border-bottom: 1px solid var(--text-primary);
 }
 
 .Card .cardImage {
@@ -12,12 +18,31 @@
   border-radius: 4px;
 }
 
+.Card .cardDetails {
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 4px;
+}
+
 .Card .cardTitle {
   text-align: left;
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.Card .cardMeta {
+  font-size: 0.8rem;
+  font-weight: 300;
 }
 
 .Card > div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.Card .cardDetails > div {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }

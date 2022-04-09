@@ -4,6 +4,7 @@ import CopyUrl from '../CopyUrl';
 import './shared.css';
 import './AnimeCard.css';
 import { searchAnilist_anime_results } from '../../graphql/types/searchAnilist';
+import { formatMediaFormat } from './utils';
 
 type Props = {
   anime: searchAnilist_anime_results;
@@ -11,7 +12,7 @@ type Props = {
 
 const AnimeCard = (props: Props) => {
   const { anime } = props;
-  const { coverImage, title: titleBlock, siteUrl, startDate } = anime;
+  const { coverImage, title: titleBlock, siteUrl, startDate, format } = anime;
 
   const imgSrc = coverImage?.large;
   const title = titleBlock?.userPreferred;
@@ -24,11 +25,12 @@ const AnimeCard = (props: Props) => {
     <div className={'Card AnimeCard'} onClick={handleOnClick}>
       {imgSrc && <img className={'cardImage'} src={imgSrc} alt={title ?? ''} />}
       <div className={'cardDetails'}>
-        {title && (
-          <div className={'cardTitle'}>
-            {title} (<span>{startDate?.year}</span>)
+        <div>
+          {title && <div className={'cardTitle'}>{title}</div>}
+          <div className={'cardMeta'}>
+            {startDate?.year} - {formatMediaFormat(format)}
           </div>
-        )}
+        </div>
         {siteUrl && <CopyUrl url={siteUrl} />}
       </div>
     </div>

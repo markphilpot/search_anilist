@@ -24,7 +24,11 @@ const Footer = (props: Props) => {
         onClick={toggleTheme}
       />
       <div className={'shortcutLink'}>
-        <a href={'https://www.icloud.com/shortcuts/334f676de6194ed8ac2b404ff0b30711'} target={'_blank'} rel={'noreferrer'}>
+        <a
+          href={'https://www.icloud.com/shortcuts/334f676de6194ed8ac2b404ff0b30711'}
+          target={'_blank'}
+          rel={'noreferrer'}
+        >
           Shortcut
         </a>
       </div>
