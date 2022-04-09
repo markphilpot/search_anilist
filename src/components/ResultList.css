@@ -1,0 +1,10 @@
+.ResultList .cardList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 8px;
+}
+
+.ResultList > h1 {
+  cursor: pointer;
+}

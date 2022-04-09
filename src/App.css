@@ -31,12 +31,35 @@
   flex-grow: 0.0001;
 }
 
-.results-list {
-  display: flex;
-  flex-direction: row;
+.logo {
+  font-family: 'Zen Old Mincho', serif;
+  font-size: 2rem;
+  margin: 8px 0;
 }
 
-.logo {
-  font-family: 'Zen Old Mincho';
-  font-size: 2rem;
+.SearchWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchInput {
+  width: 20%;
+  margin-right: 8px;
+  padding: 8px;
+  border-radius: 4px;
+  border-width: 1px;
+}
+
+.searchButton {
+  margin-right: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border-width: 1px;
+  cursor: pointer;
+}
+
+.toggleThemeButton {
+  cursor: pointer;
 }

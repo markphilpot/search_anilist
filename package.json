@@ -18,6 +18,7 @@
     "@types/react": "^17.0.20",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^17.0.9",
+    "classnames": "^2.3.1",
     "graphql": "^15.5.3",
     "ramda": "^0.28.0",
     "react": "^18.0.0",
@@ -43,6 +44,9 @@
     "eject": "react-scripts eject",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "lint": "yarn lint:tsc && yarn lint:es",
+    "lint:es": "eslint .",
+    "lint:tsc": "tsc --noemit",
     "update-schema": "curl -i -X POST https://graphql.anilist.co -H \"Content-Type: application/graphql\" -d @src/assets/introspection.graphql",
     "g2ts": "apollo codegen:generate --localSchemaFile=\"src/assets/schema.json\" --target=typescript --tsFileExtension=d.ts --tagName=gql --outputFlat src/graphql/types && cp src/graphql/types/globalTypes.d.ts src/graphql/types/globalTypes.ts"
   },

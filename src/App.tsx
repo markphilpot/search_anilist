@@ -4,7 +4,7 @@ import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 import { useLocalStorage } from 'react-use';
-import { empty, all, not } from 'ramda';
+import { all } from 'ramda';
 import { useQuery } from '@apollo/client';
 import { useSearchParam } from 'react-use';
 import { searchAnilist } from './graphql/search';
@@ -18,6 +18,8 @@ import MangaCard from './components/cards/MangaCard';
 
 import '@fontsource/zen-old-mincho/400.css';
 import './App.css';
+import classNames from 'classnames';
+import ResultList from './components/ResultList';
 
 function App() {
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -53,6 +55,13 @@ function App() {
     setQuery(value);
   }, []);
 
+  const handleOnChange = useCallback((event) => {
+    const value = event.target.value;
+    if (value.length === 0) {
+      setQuery('');
+    }
+  }, []);
+
   const animeResults = data?.anime?.results ?? [];
   const mangaResults = data?.manga?.results ?? [];
 
@@ -60,38 +69,55 @@ function App() {
 
   return (
     <div className="App" data-theme={theme}>
-      <div className={`spacer${!noResults ? ' spacer-collapse' : ''}`} />
+      <div
+        className={classNames({
+          'spacer': true,
+          'spacer-collapse': !noResults,
+        })}
+      />
+
       <div className={'logo'}>何 何</div>
-      <div>
+
+      <div className={'SearchWrapper'}>
         <input
-          type={'text'}
+          className={'searchInput'}
+          type={'search'}
           defaultValue={query}
           ref={inputRef}
           onKeyDown={handleKeyDown}
-          placeholder={'Search Anime, Manga, Characters, Staff, & Studios'}
+          onChange={handleOnChange}
+          placeholder={'Sound Euphonium'}
         />
-        <button onClick={handleOnSubmit}>Search</button>
-        <FontAwesomeIcon icon={theme === 'light' ? faSun : faMoon} onClick={toggleTheme} />
+        <button className={'searchButton'} onClick={handleOnSubmit}>
+          Search
+        </button>
       </div>
-      <div className={`contents${!noResults ? ' contents-shown' : ''}`}>
+
+      <div
+        className={classNames({
+          'contents': true,
+          'contents-shown': !noResults,
+        })}
+      >
         {animeResults.length > 0 && (
-          <div>
-            <h1>Anime</h1>
-            <div className={'results-list'}>
-              {animeResults.map((result) => result && <AnimeCard key={result.id} anime={result} />)}
-            </div>
-          </div>
+          <ResultList title={'Anime'}>
+            {animeResults.map((result) => result && <AnimeCard key={result.id} anime={result} />)}
+          </ResultList>
         )}
         {mangaResults.length > 0 && (
-          <div>
-            <h1>Manga</h1>
-            <div className={'results-list'}>
-              {mangaResults.map((result) => result && <MangaCard key={result.id} manga={result} />)}
-            </div>
-          </div>
+          <ResultList title={'Manga'}>
+            {mangaResults.map((result) => result && <MangaCard key={result.id} manga={result} />)}
+          </ResultList>
         )}
       </div>
-      <Footer />
+
+      <Footer>
+        <FontAwesomeIcon
+          className={'toggleThemeButton'}
+          icon={theme === 'light' ? faSun : faMoon}
+          onClick={toggleTheme}
+        />
+      </Footer>
       <ToastContainer transition={Slide} />
     </div>
   );

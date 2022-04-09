@@ -1,0 +1,23 @@
+.Card {
+  cursor: pointer;
+  width: 200px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.Card .cardImage {
+  height: 300px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.Card .cardTitle {
+  text-align: left;
+}
+
+.Card > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

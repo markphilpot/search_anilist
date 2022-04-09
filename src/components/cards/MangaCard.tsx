@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import CopyUrl from '../CopyUrl';
 
+import './shared.css';
 import './MangaCard.css';
 import { searchAnilist_manga_results } from '../../graphql/types/searchAnilist';
 
@@ -20,10 +21,10 @@ const MangaCard = (props: Props) => {
   }, [siteUrl]);
 
   return (
-    <div className={'MangaCard'} onClick={handleOnClick}>
-      {imgSrc && <img src={imgSrc} alt={title ?? ''} />}
+    <div className={'Card MangaCard'} onClick={handleOnClick}>
+      {imgSrc && <img className={'cardImage'} src={imgSrc} alt={title ?? ''} />}
       <div>
-        {title && <div>{title}</div>}
+        {title && <div className={'cardTitle'}>{title}</div>}
         {siteUrl && <CopyUrl url={siteUrl} />}
       </div>
     </div>

@@ -37,7 +37,6 @@ export const searchAnilist = gql`
         }
         type
         format
-        bannerImage
         isLicensed
         startDate {
           year

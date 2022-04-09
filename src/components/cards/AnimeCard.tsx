@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import CopyUrl from '../CopyUrl';
 
+import './shared.css';
 import './AnimeCard.css';
 import { searchAnilist_anime_results } from '../../graphql/types/searchAnilist';
 
@@ -10,7 +11,7 @@ type Props = {
 
 const AnimeCard = (props: Props) => {
   const { anime } = props;
-  const { coverImage, title: titleBlock, siteUrl } = anime;
+  const { coverImage, title: titleBlock, siteUrl, startDate } = anime;
 
   const imgSrc = coverImage?.large;
   const title = titleBlock?.userPreferred;
@@ -20,10 +21,14 @@ const AnimeCard = (props: Props) => {
   }, [siteUrl]);
 
   return (
-    <div className={'AnimeCard'} onClick={handleOnClick}>
-      {imgSrc && <img src={imgSrc} alt={title ?? ''} />}
+    <div className={'Card AnimeCard'} onClick={handleOnClick}>
+      {imgSrc && <img className={'cardImage'} src={imgSrc} alt={title ?? ''} />}
       <div>
-        {title && <div>{title}</div>}
+        {title && (
+          <div className={'cardTitle'}>
+            {title} (<span>{startDate?.year}</span>)
+          </div>
+        )}
         {siteUrl && <CopyUrl url={siteUrl} />}
       </div>
     </div>
