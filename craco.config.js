@@ -1,10 +1,9 @@
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = function () {
   return {
     webpack: {
-      plugins: [new BundleAnalyzerPlugin({ analyzerMode: "server" })],
+      plugins: [new BundleAnalyzerPlugin({ analyzerMode: 'server' })],
     },
   };
 };
