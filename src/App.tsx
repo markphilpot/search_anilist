@@ -5,12 +5,10 @@ import 'react-toastify/dist/ReactToastify.min.css';
 
 import { all } from 'ramda';
 import { useQuery } from '@apollo/client';
+import classNames from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 import { searchAnilist } from './graphql/search';
 import { searchAnilist as searchAnilistData, searchAnilistVariables } from './graphql/types/searchAnilist';
-import AnimeCard from './components/cards/AnimeCard';
-
-import Footer from './components/Footer';
-import MangaCard from './components/cards/MangaCard';
 
 // Fonts
 import '@fontsource/zen-old-mincho/400.css';
@@ -19,15 +17,18 @@ import '@fontsource/lato/700.css';
 import '@fontsource/source-sans-pro';
 
 import './App.css';
-import classNames from 'classnames';
+
 import ResultList from './components/ResultList';
+import Footer from './components/Footer';
+
+import AnimeCard from './components/cards/AnimeCard';
+import MangaCard from './components/cards/MangaCard';
 import CharacterCard from './components/cards/CharacterCard';
 import StaffCard from './components/cards/StaffCard';
 import StudioCard from './components/cards/StudioCard';
 
 import titleSuggestions from './assets/titles.json';
 import useManageTheme from './hooks/useManageTheme';
-import { useSearchParams } from 'react-router-dom';
 
 function App() {
   const { theme } = useManageTheme();

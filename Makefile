@@ -1,4 +1,4 @@
-.PHONY : lint format
+.PHONY : lint format clean
 
 all: format lint
 
@@ -7,3 +7,6 @@ format:
 
 lint:
 	yarn lint
+
+clean:
+	rm -rf build *.log
