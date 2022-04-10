@@ -34,8 +34,10 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
+    "@craco/craco": "^6.4.3",
     "apollo": "^2.33.10",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "resolutions": {
     "graphql": "^15.5.3"
@@ -50,6 +52,7 @@
     "lint": "yarn lint:tsc && yarn lint:es",
     "lint:es": "eslint .",
     "lint:tsc": "tsc --noemit",
+    "analyze": "craco build",
     "update-schema": "curl -i -X POST https://graphql.anilist.co -H \"Content-Type: application/graphql\" -d @src/assets/introspection.graphql",
     "g2ts": "apollo codegen:generate --localSchemaFile=\"src/assets/schema.json\" --target=typescript --tsFileExtension=d.ts --tagName=gql --outputFlat src/graphql/types && cp src/graphql/types/globalTypes.d.ts src/graphql/types/globalTypes.ts"
   },
