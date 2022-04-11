@@ -28,7 +28,7 @@ const AnimeCard = (props: Props) => {
         <div>
           {title && <div className={'cardTitle'}>{title}</div>}
           <div className={'cardMeta'}>
-            {startDate?.year} - {formatMediaFormat(format)}
+            {startDate?.year} · {formatMediaFormat(format)}
           </div>
         </div>
         {siteUrl && <CopyUrl url={siteUrl} />}

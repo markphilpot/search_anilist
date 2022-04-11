@@ -94,16 +94,53 @@ function App() {
     [handleHistoryChange]
   );
 
-  const animeResults = data?.anime?.results ?? [];
-  const mangaResults = data?.manga?.results ?? [];
-  const characterResults = data?.characters?.results ?? [];
-  const staffResults = data?.staff?.results ?? [];
-  const studioResults = data?.studios?.results ?? [];
+  const animeResults = useMemo(() => data?.anime?.results ?? [], [data]);
+  const mangaResults = useMemo(() => data?.manga?.results ?? [], [data]);
+  const characterResults = useMemo(() => data?.characters?.results ?? [], [data]);
+  const staffResults = useMemo(() => data?.staff?.results ?? [], [data]);
+  const studioResults = useMemo(() => data?.studios?.results ?? [], [data]);
 
   const noResults = all(
     (x) => x.length === 0,
     [animeResults, mangaResults, characterResults, staffResults, studioResults]
   );
+
+  const rows = useMemo(() => {
+    const r = [];
+
+    if (animeResults.length > 0)
+      r.push({
+        title: 'Anime',
+        results: animeResults,
+        components: animeResults.map((result) => result && <AnimeCard key={result.id} anime={result} />),
+      });
+    if (mangaResults.length > 0)
+      r.push({
+        title: 'Manga',
+        results: mangaResults,
+        components: mangaResults.map((result) => result && <MangaCard key={result.id} manga={result} />),
+      });
+    if (characterResults.length > 0)
+      r.push({
+        title: 'Characters',
+        results: characterResults,
+        components: characterResults.map((result) => result && <CharacterCard key={result.id} character={result} />),
+      });
+    if (staffResults.length > 0)
+      r.push({
+        title: 'Staff',
+        results: staffResults,
+        components: staffResults.map((result) => result && <StaffCard key={result.id} staff={result} />),
+      });
+    if (studioResults.length > 0)
+      r.push({
+        title: 'Studios',
+        results: studioResults,
+        components: studioResults.map((result) => result && <StudioCard key={result.id} studio={result} />),
+      });
+
+    return r;
+  }, [animeResults, characterResults, mangaResults, staffResults, studioResults]);
 
   return (
     <div className="App" data-theme={theme}>
@@ -124,27 +161,37 @@ function App() {
       </div>
 
       <div className={'SearchWrapper'}>
-        <input
-          className={classNames({
-            'searchInput': true,
-            'searchInputSmall': !noResults,
-          })}
-          type={'search'}
-          defaultValue={query}
-          ref={inputRef}
-          onKeyDown={handleKeyDown}
-          onChange={handleOnChange}
-          placeholder={titleSuggestion}
-        />
-        <button
-          className={classNames({
-            'searchButton': true,
-            'searchButtonSmall': !noResults,
-          })}
-          onClick={handleOnSubmit}
-        >
-          <IoSearchOutline />
-        </button>
+        <div className={'searchWrapperInner'}>
+          <input
+            className={classNames({
+              'searchInput': true,
+              'searchInputSmall': !noResults,
+            })}
+            type={'text'}
+            defaultValue={query}
+            ref={inputRef}
+            onKeyDown={handleKeyDown}
+            onChange={handleOnChange}
+            placeholder={titleSuggestion}
+          />
+          <button
+            className={classNames({
+              'searchButton': true,
+              'searchButtonSmall': !noResults,
+            })}
+            onClick={handleOnSubmit}
+          >
+            <IoSearchOutline />
+          </button>
+        </div>
+      </div>
+
+      <div className={'resultLinks'}>
+        {rows
+          .map((r) => <a href={`#${r.title}`}>{r.title}</a>)
+          .reduce((acc: React.ReactNode[], r: React.ReactNode) => {
+            return acc.length === 0 ? [r] : [...acc, ' · ', r];
+          }, [])}
       </div>
 
       <div
@@ -153,31 +200,13 @@ function App() {
           'contents-shown': !noResults,
         })}
       >
-        {animeResults.length > 0 && (
-          <ResultList title={'Anime'}>
-            {animeResults.map((result) => result && <AnimeCard key={result.id} anime={result} />)}
-          </ResultList>
-        )}
-        {mangaResults.length > 0 && (
-          <ResultList title={'Manga'}>
-            {mangaResults.map((result) => result && <MangaCard key={result.id} manga={result} />)}
-          </ResultList>
-        )}
-        {characterResults.length > 0 && (
-          <ResultList title={'Characters'}>
-            {characterResults.map((result) => result && <CharacterCard key={result.id} character={result} />)}
-          </ResultList>
-        )}
-        {staffResults.length > 0 && (
-          <ResultList title={'Staff'}>
-            {staffResults.map((result) => result && <StaffCard key={result.id} staff={result} />)}
-          </ResultList>
-        )}
-        {studioResults.length > 0 && (
-          <ResultList title={'Studios'}>
-            {studioResults.map((result) => result && <StudioCard key={result.id} studio={result} />)}
-          </ResultList>
-        )}
+        {rows.map((r) => {
+          return (
+            <ResultList key={r.title} title={r.title}>
+              {r.components}
+            </ResultList>
+          );
+        })}
       </div>
 
       {/*<TitleSuggestionsUtil/>*/}

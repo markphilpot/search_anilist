@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 
 import './ResultList.css';
 
@@ -10,16 +10,10 @@ type Props = {
 const ResultList = (props: Props) => {
   const { title, children } = props;
 
-  const [show, setShow] = useState(true);
-
-  const handleOnClick = useCallback(() => {
-    setShow((x) => !x);
-  }, []);
-
   return (
     <div className={'ResultList'}>
-      <h2 onClick={handleOnClick}>{title}</h2>
-      {show && <div className={'cardList'}>{children}</div>}
+      <h2 id={title}>{title}</h2>
+      <div className={'cardList'}>{children}</div>
     </div>
   );
 };
