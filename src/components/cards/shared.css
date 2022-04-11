@@ -18,6 +18,16 @@
   border-radius: 4px;
 }
 
+@media only screen and (max-width: 390px) {
+  .Card {
+    width: 170px;
+  }
+  .Card .cardImage {
+    height: 255px;
+    width: 170px;
+  }
+}
+
 .Card .cardDetails {
   font-family: 'Lato', sans-serif;
   margin-bottom: 4px;
