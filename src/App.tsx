@@ -29,6 +29,7 @@ import StudioCard from './components/cards/StudioCard';
 
 import titleSuggestions from './assets/titles.json';
 import useManageTheme from './hooks/useManageTheme';
+import { IoSearchOutline } from 'react-icons/io5';
 
 function App() {
   const { theme } = useManageTheme();
@@ -142,7 +143,7 @@ function App() {
           })}
           onClick={handleOnSubmit}
         >
-          Search
+          <IoSearchOutline />
         </button>
       </div>
 

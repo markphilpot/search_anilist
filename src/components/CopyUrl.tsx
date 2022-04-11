@@ -1,8 +1,7 @@
 import React, { MouseEventHandler, useCallback } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboard } from '@fortawesome/free-regular-svg-icons';
+import { IoClipboardOutline } from 'react-icons/io5';
 
 type Props = {
   url: string;
@@ -30,7 +29,7 @@ const CopyUrl = (props: Props) => {
     <div onClick={squashClick}>
       <CopyToClipboard text={url} onCopy={handleOnCopy}>
         <span>
-          <FontAwesomeIcon icon={faClipboard} />
+          <IoClipboardOutline />
         </span>
       </CopyToClipboard>
     </div>
