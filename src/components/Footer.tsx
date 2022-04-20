@@ -1,13 +1,14 @@
 import React from 'react';
 
 import './Footer.css';
-import useManageTheme from '../hooks/useManageTheme';
 import { IoSunnyOutline, IoMoonOutline } from 'react-icons/io5';
+import { useManageTheme, useTheme } from '../context/theme';
 
 type Props = {};
 
 const Footer = (props: Props) => {
-  const { theme, toggleTheme } = useManageTheme();
+  const theme = useTheme();
+  const { toggleTheme } = useManageTheme();
 
   const Icon = theme === 'light' ? IoSunnyOutline : IoMoonOutline;
 

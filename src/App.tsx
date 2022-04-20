@@ -27,12 +27,12 @@ import CharacterCard from './components/cards/CharacterCard';
 import StaffCard from './components/cards/StaffCard';
 import StudioCard from './components/cards/StudioCard';
 
-import titleSuggestions from './assets/titles.json';
-import useManageTheme from './hooks/useManageTheme';
+import titleSuggestions from './static/titles.json';
 import { IoSearchOutline } from 'react-icons/io5';
+import { useTheme } from './context/theme';
 
 function App() {
-  const { theme } = useManageTheme();
+  const theme = useTheme();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');

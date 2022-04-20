@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { BrowserRouter } from 'react-router-dom';
+import { useWatchColorScheme, PrefersColorSchemeContext } from './context/theme';
 
 const client = new ApolloClient({
   uri: 'https://graphql.anilist.co',
@@ -15,11 +16,21 @@ const client = new ApolloClient({
 const container = document.getElementById('root');
 const root = createRoot(container);
 
+const Index = () => {
+  const { colorScheme } = useWatchColorScheme();
+
+  return (
+    <PrefersColorSchemeContext.Provider value={colorScheme}>
+      <App />
+    </PrefersColorSchemeContext.Provider>
+  );
+};
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={client}>
-        <App />
+        <Index />
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>

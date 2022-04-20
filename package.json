@@ -51,7 +51,7 @@
     "lint:tsc": "tsc --noemit",
     "analyze": "craco build",
     "update-schema": "curl -i -X POST https://graphql.anilist.co -H \"Content-Type: application/graphql\" -d @src/assets/introspection.graphql",
-    "g2ts": "apollo codegen:generate --localSchemaFile=\"src/assets/schema.json\" --target=typescript --tsFileExtension=d.ts --tagName=gql --outputFlat src/graphql/types && cp src/graphql/types/globalTypes.d.ts src/graphql/types/globalTypes.ts"
+    "g2ts": "apollo codegen:generate --localSchemaFile=\"./assets/schema.json\" --target=typescript --tsFileExtension=d.ts --tagName=gql --outputFlat src/graphql/types && cp src/graphql/types/globalTypes.d.ts src/graphql/types/globalTypes.ts"
   },
   "eslintConfig": {
     "extends": [

@@ -1,0 +1,12 @@
+{
+  "name": "Anilist GraphQL API",
+  "schemaPath": "./assets/schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Anilist API": {
+        "url": "https://graphql.anilist.co",
+        "introspect": true
+      }
+    }
+  }
+}
