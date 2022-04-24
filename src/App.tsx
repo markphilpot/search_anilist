@@ -32,7 +32,7 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { useTheme } from './context/theme';
 
 function App() {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
@@ -141,6 +141,15 @@ function App() {
 
     return r;
   }, [animeResults, characterResults, mangaResults, staffResults, studioResults]);
+
+  // Make sure portals can see the theme attribute
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+
+    return () => {
+      document.body.removeAttribute('data-theme');
+    };
+  }, [theme]);
 
   return (
     <div className="App" data-theme={theme}>

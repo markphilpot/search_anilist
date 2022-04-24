@@ -1493,6 +1493,11 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.3.tgz#0300943770e04231041a51bd39f0439b5c7ab4f0"
   integrity sha512-nkalE/f1RvRGChwBnEIoBfSEYOXnCRdleKuv6+lePbMDrMZXeDQnqak5XDOeBgrPPyPfAdcCu/B5z+v3VhplGg==
 
+"@mphilpot/react-circular-menu@^2.3.7":
+  version "2.3.7"
+  resolved "https://registry.yarnpkg.com/@mphilpot/react-circular-menu/-/react-circular-menu-2.3.7.tgz#b7d0f894d32b52b7dd1ab33a2e73bd95956f7ec2"
+  integrity sha512-l2CPR6d24yeXdBUwu8NJxISdovqzpXKq1JVt5R1pkxVqUBlR56F+OxmNuAe9HMeNJW7CZ2uzqrugFvNCCP43zw==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
